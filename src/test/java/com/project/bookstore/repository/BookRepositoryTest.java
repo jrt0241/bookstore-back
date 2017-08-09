@@ -2,6 +2,9 @@ package com.project.bookstore.repository;
 
 import com.project.bookstore.model.Book;
 import com.project.bookstore.model.Language;
+import com.project.bookstore.util.IsbnGenerator;
+import com.project.bookstore.util.NumberGenerator;
+import com.project.bookstore.util.TextUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -48,7 +51,7 @@ public class BookRepositoryTest {
         assertEquals(Long.valueOf(0), bookRepository.countAll());
         assertEquals(0, bookRepository.findAll().size());
         //create a book
-        Book book = new Book("isnb","a title",12F,123,Language.ENGLISH,new Date(),"http://image","description");
+        Book book = new Book("isnb","a  title",12F,123,Language.ENGLISH,new Date(),"http://image","description");
         book=bookRepository.create(book);
         Long bookId= book.getId();
 
@@ -60,6 +63,9 @@ public class BookRepositoryTest {
 
         //check the found book is correct
         assertEquals("a title",bookFound.getTitle());
+        assertTrue(bookFound.getIsbn().startsWith("13"));
+
+        //Test Counting Books
         assertEquals(Long.valueOf(1), bookRepository.countAll());
         assertEquals(1, bookRepository.findAll().size());
 
@@ -76,6 +82,9 @@ public class BookRepositoryTest {
                 .addClass(BookRepository.class)// add all depending classes over here in package or it will throw errors
                 .addClass(Book.class)
                 .addClass(Language.class)
+                .addClass(TextUtil.class)
+                .addClass(NumberGenerator.class)
+                .addClass(IsbnGenerator.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource("META-INF/test-persistence.xml", "persistence.xml");
     }
