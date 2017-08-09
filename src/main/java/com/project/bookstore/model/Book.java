@@ -34,6 +34,20 @@ public class Book {
     @Column (name = "language")
     private Language language;
 
+    public Book(){
+    }
+
+    public Book(String isbn, String title, Float unitCost, Integer nbOfPages, Language language, Date publicationDate, String imageURL, String description) {
+        this.isbn = isbn;
+        this.title = title;
+        this.unitCost = unitCost;
+        this.nbOfPages = nbOfPages;
+        this.language = language;
+        this.publicationDate = publicationDate;
+        this.imageUrl = imageURL;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
