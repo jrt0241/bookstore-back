@@ -7,6 +7,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
@@ -20,6 +21,26 @@ public class BookRepositoryTest {
 
     @Inject
     private BookRepository bookRepository;
+
+    // Since we are catching the exception here we expect the test to pass. If we don't put
+    //Expection expected statement we shall get error in out tests.
+    @Test(expected=Exception.class)
+    public void findWithInvalidId(){
+        bookRepository.find(null);
+    }
+
+    @Test(expected=Exception.class)
+    public void createInvalidBook(){
+
+        //Here we pass title as null and test the functionality.
+        //initially without any changes/bean validations the title takes
+        // null values and test passes. But it is not desirable.
+        Book book = new Book("isnb",null,12F,123,Language.ENGLISH,new Date(),"http://image","description");
+        book=bookRepository.create(book);
+        Long bookId= book.getId();
+
+    }
+
 
     @org.junit.Test
     public void create() throws Exception {
@@ -52,7 +73,7 @@ public class BookRepositoryTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(BookRepository.class)
+                .addClass(BookRepository.class)// add all depending classes over here in package or it will throw errors
                 .addClass(Book.class)
                 .addClass(Language.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
