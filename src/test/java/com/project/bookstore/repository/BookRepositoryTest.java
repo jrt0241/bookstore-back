@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import java.util.Date;
 
 import static org.junit.Assert.*;
-
+// This is a Test on Repository Class to check if all the Database related functionality are working properly
 @RunWith(Arquillian.class)
 public class BookRepositoryTest {
 
