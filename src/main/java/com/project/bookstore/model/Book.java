@@ -15,11 +15,11 @@ public class Book {
 
     @Column (length = 200)
     @NotNull
-    @Size(min = 1,max=100)
+    @Size(min = 1,max=200)
     private String title;
 
-    @Column (length = 1000)
-    @Size(min = 1,max=1000)
+    @Column (length = 10000)
+    @Size(min = 1,max=10000)
     private String description;
 
     @Column(name = "unit_cost")
@@ -36,12 +36,13 @@ public class Book {
     @Past
     private Date publicationDate;
 
-    @Column (name = "nb_Of_Pages")
+    @Column (name = "nb_of_pages")
     private Integer nbOfPages;
 
-    @Column (name = "imageUrl")
+    @Column (name = "image_url")
     private String imageUrl;
 
+    @Enumerated
     @Column (name = "language")
     private Language language;
 
