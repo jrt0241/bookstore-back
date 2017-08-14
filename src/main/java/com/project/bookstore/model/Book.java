@@ -1,5 +1,8 @@
 package com.project.bookstore.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -8,42 +11,55 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
+@ApiModel(description = "Book resource representation")
 public class Book {
 
     @Id @GeneratedValue
+    @ApiModelProperty("Identifier")
     private Long id;
 
     @Column (length = 200)
     @NotNull
     @Size(min = 1,max=200)
+    @ApiModelProperty("Title of the book")
     private String title;
 
     @Column (length = 10000)
     @Size(min = 1,max=10000)
+    @ApiModelProperty("Description of the book")
     private String description;
 
     @Column(name = "unit_cost")
     @Min(1)
+    @ApiModelProperty("Cost of the book")
     private Float unitCost;
 
     @Column (name = "isbn")
     @NotNull
     @Size(min = 1,max=50)
+    @ApiModelProperty("ISBN number of the Book")
     private String isbn;
 
     @Column (name = "publication_date")
     @Temporal(TemporalType.DATE)
     @Past
+    @ApiModelProperty("Publication date of the Book")
     private Date publicationDate;
 
     @Column (name = "nb_of_pages")
+
+    @ApiModelProperty("Number of pages in the Book")
     private Integer nbOfPages;
 
     @Column (name = "image_url")
+
+    @ApiModelProperty("Book Image URL")
     private String imageUrl;
 
     @Enumerated
     @Column (name = "language")
+
+    @ApiModelProperty("Language in which Book is available")
     private Language language;
 
     public Book(){
